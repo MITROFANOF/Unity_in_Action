@@ -45,9 +45,9 @@ namespace Ch2.Scripts
         {
             var sphere = GameObject.CreatePrimitive((PrimitiveType.Sphere));
             sphere.transform.position = hitInfoPoint;
-            
+
             yield return new WaitForSeconds(1f);
-            
+
             Destroy(sphere);
         }
     }

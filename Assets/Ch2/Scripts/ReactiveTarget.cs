@@ -7,6 +7,9 @@ namespace Ch2.Scripts
     {
         public void ReactToHit()
         {
+            var behavior = GetComponent<WanderingAI>();
+            // ReSharper disable once Unity.NoNullPropagation
+            behavior?.SetAlive(false);
             StartCoroutine(Die());
         }
 
@@ -15,7 +18,7 @@ namespace Ch2.Scripts
             transform.Rotate(-75f, 0f, 0f);
 
             yield return new WaitForSeconds(1.5f);
-            
+
             Destroy(gameObject);
         }
     }
