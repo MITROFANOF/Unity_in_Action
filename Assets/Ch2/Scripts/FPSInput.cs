@@ -8,7 +8,7 @@ namespace Ch2.Scripts
     {
         public float speed = 6.0f;
         public float gravity = -9.8f;
-        
+
         private CharacterController _controller;
 
         private void Start()

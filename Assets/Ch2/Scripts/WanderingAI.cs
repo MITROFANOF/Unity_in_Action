@@ -1,5 +1,5 @@
-using System.Collections;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace Ch2.Scripts
 {
@@ -7,26 +7,50 @@ namespace Ch2.Scripts
     {
         public float speed = 3.0f;
         public float obstacleRange = 5.0f;
-        
-        [SerializeField] private float castRadius = 0.75f;
-        [SerializeField] private float turnAngle = 110f;
+
+        [SerializeField] private GameObject fireballPrefab;
+        private GameObject _firaball;
+
+        private bool _alive;
+        private const float CastRadius = 0.75f;
+        private const float TurnAngle = 110f;
+
+        private void Start()
+        {
+            _alive = true;
+        }
 
         private void Update()
         {
-            var enemyTransform = transform;
-            
+            if (!_alive) return;
 
+            var enemyTransform = transform;
             var ray = new Ray(enemyTransform.position, enemyTransform.forward);
-            if (!Physics.SphereCast(ray, castRadius, out var hit)) return;
-            if (!(hit.distance < obstacleRange))
+
+            if (Physics.SphereCast(ray, CastRadius, out var hit, obstacleRange))
             {
-                enemyTransform.Translate(0f, 0f, speed * Time.deltaTime);
+                if (hit.transform.gameObject.GetComponent<PlayerCharacter>())
+                {
+                    if (_firaball != null) return;
+                    _firaball = Instantiate(fireballPrefab);
+                    _firaball.transform.position = enemyTransform.TransformPoint(Vector3.forward * 1.5f);
+                    _firaball.transform.rotation = enemyTransform.rotation;
+                }
+                else
+                {
+                    var angle = Random.Range(-TurnAngle, TurnAngle);
+                    enemyTransform.Rotate(0f, angle, 0f);
+                }
             }
             else
             {
-                var angle = Random.Range(-turnAngle, turnAngle); 
-                enemyTransform.Rotate(0f, angle, 0f);
+                enemyTransform.Translate(0f, 0f, speed * Time.deltaTime);
             }
+        }
+
+        public void SetAlive(bool alive)
+        {
+            _alive = alive;
         }
     }
 }
