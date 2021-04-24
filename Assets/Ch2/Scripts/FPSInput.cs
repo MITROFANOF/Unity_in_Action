@@ -6,11 +6,27 @@ namespace Ch2.Scripts
     [AddComponentMenu("Control Script/FPS Input")]
     public class FPSInput : MonoBehaviour
     {
-        public float speed = 6.0f;
+        private float _speed = 6.0f;
+        private const float BaseSpeed = 6.0f;
         public float gravity = -9.8f;
 
         private CharacterController _controller;
 
+        private void Awake()
+        {
+            Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+        }
+
+        private void OnDestroy()
+        {
+            Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+        }
+
+        private void OnSpeedChanged(float value)
+        {
+            _speed = BaseSpeed * value;
+        }
+        
         private void Start()
         {
             _controller = GetComponent<CharacterController>();
@@ -18,11 +34,11 @@ namespace Ch2.Scripts
 
         private void Update()
         {
-            var deltaX = Input.GetAxis("Horizontal") * speed;
-            var deltaZ = Input.GetAxis("Vertical") * speed;
+            var deltaX = Input.GetAxis("Horizontal") * _speed;
+            var deltaZ = Input.GetAxis("Vertical") * _speed;
 
             var movement = new Vector3(deltaX, 0f, deltaZ);
-            movement = Vector3.ClampMagnitude(movement, speed);
+            movement = Vector3.ClampMagnitude(movement, _speed);
             movement.y = gravity;
             movement *= Time.deltaTime;
             movement = transform.TransformDirection(movement);

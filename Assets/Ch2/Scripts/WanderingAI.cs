@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -5,7 +6,8 @@ namespace Ch2.Scripts
 {
     public class WanderingAI : MonoBehaviour
     {
-        public float speed = 3.0f;
+        private static float _speed = 3.0f;
+        private const float BaseSpeed = 3.0f;
         public float obstacleRange = 5.0f;
 
         [SerializeField] private GameObject fireballPrefab;
@@ -14,6 +16,21 @@ namespace Ch2.Scripts
         private bool _alive;
         private const float CastRadius = 0.75f;
         private const float TurnAngle = 110f;
+
+        private void Awake()
+        {
+            Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+        }
+
+        private void OnDestroy()
+        {
+            Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+        }
+
+        private void OnSpeedChanged(float value)
+        {
+            _speed = BaseSpeed * value;
+        }
 
         private void Start()
         {
@@ -31,7 +48,7 @@ namespace Ch2.Scripts
             {
                 if (hit.transform.gameObject.GetComponent<PlayerCharacter>())
                 {
-                    if (_firaball != null) return;
+                    if (_firaball) return;
                     _firaball = Instantiate(fireballPrefab);
                     _firaball.transform.position = enemyTransform.TransformPoint(Vector3.forward * 1.5f);
                     _firaball.transform.rotation = enemyTransform.rotation;
@@ -44,7 +61,7 @@ namespace Ch2.Scripts
             }
             else
             {
-                enemyTransform.Translate(0f, 0f, speed * Time.deltaTime);
+                enemyTransform.Translate(0f, 0f, _speed * Time.deltaTime);
             }
         }
 
