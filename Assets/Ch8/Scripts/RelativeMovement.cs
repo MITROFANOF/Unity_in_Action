@@ -13,6 +13,7 @@ namespace Ch8.Scripts
         public float gravity = -9.8f;
         public float terminalVelocity = -10f;
         public float minFall = -1.5f;
+        public float pushForce = 3f;
 
         private float _vertSpeed;
         private ControllerColliderHit _contact;
@@ -21,6 +22,8 @@ namespace Ch8.Scripts
         private static readonly int SpeedParam = Animator.StringToHash("speed");
         private static readonly int JumpingParam = Animator.StringToHash("jumping");
 
+        
+        
         private void Start()
         {
             _vertSpeed = minFall;
@@ -117,6 +120,15 @@ namespace Ch8.Scripts
             _characterController.Move(movement * Time.deltaTime);
         }
 
-        private void OnControllerColliderHit(ControllerColliderHit hit) => _contact = hit;
+        private void OnControllerColliderHit(ControllerColliderHit hit)
+        {
+            _contact = hit;
+
+            var body = hit.collider.attachedRigidbody;
+            if (body != null && !body.isKinematic)
+            {
+                body.velocity = hit.moveDirection * pushForce;
+            }
+        }
     }
 }
