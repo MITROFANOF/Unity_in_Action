@@ -1,4 +1,3 @@
-using System;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -27,7 +26,7 @@ namespace Ch2.Scripts
             Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
         }
 
-        private void OnSpeedChanged(float value)
+        private static void OnSpeedChanged(float value)
         {
             _speed = BaseSpeed * value;
         }
