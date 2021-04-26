@@ -108,4 +108,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c07993c7ede904458679cef72a6dee6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  itemName: Pistol
+  itemName: pistol

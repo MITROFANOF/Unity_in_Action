@@ -27,12 +27,12 @@ namespace Ch8.Scripts
         private void Start()
         {
             _vertSpeed = minFall;
-            _animator = GetComponent<Animator>();
-            _characterController = GetComponent<CharacterController>();
         }
 
         private void Awake()
         {
+            _animator = GetComponent<Animator>();
+            _characterController = GetComponent<CharacterController>();
             Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
         }
 

@@ -7,8 +7,11 @@ namespace Ch9.Scripts
     {
         [SerializeField] private GameObject[] targets;
 
+        public bool requireKey;
+
         private void OnTriggerEnter(Collider other)
         {
+            if (requireKey && Managers.Inventory.EquippedItem != "key") return;
             foreach (var target in targets)
             {
                 target.SendMessage("Activate");

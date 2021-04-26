@@ -40,7 +40,7 @@ namespace Ch9.Scripts
                 var lastReady = numReady;
                 numReady = _startSequence.Count(manager => manager.Status == ManagerStatus.Started);
                 if(numReady > lastReady)
-                    Debug.Log("Progress: " + numReady + "/" + numModules);;
+                    Debug.Log("Progress: " + numReady + "/" + numModules);
                 yield return null;
             }
             
