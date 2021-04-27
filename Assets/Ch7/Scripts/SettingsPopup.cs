@@ -30,7 +30,7 @@ namespace Ch7.Scripts
 
         public void OnSpeedValue(float speed)
         {
-            Messenger<float>.Broadcast(GameEvent.SPEED_CHANGED, speed);
+            Messenger<float>.Broadcast(GameEvent.SpeedChanged, speed);
         }
     }
 }

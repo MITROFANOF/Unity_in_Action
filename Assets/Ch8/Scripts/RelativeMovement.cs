@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Ch7.Scripts;
+using UnityEngine;
 
 namespace Ch8.Scripts
 {
@@ -33,12 +34,12 @@ namespace Ch8.Scripts
         {
             _animator = GetComponent<Animator>();
             _characterController = GetComponent<CharacterController>();
-            Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+            Messenger<float>.AddListener(GameEvent.SpeedChanged, OnSpeedChanged);
         }
 
         private void OnDestroy()
         {
-            Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+            Messenger<float>.RemoveListener(GameEvent.SpeedChanged, OnSpeedChanged);
         }
 
         private void OnSpeedChanged(float value)

@@ -12,12 +12,12 @@ namespace Ch7.Scripts
 
         private void Awake()
         {
-            Messenger.AddListener(GameEvent.ENEMY_HIT, OnEnemyHit);
+            Messenger.AddListener(GameEvent.EnemyHit, OnEnemyHit);
         }
 
         private void OnDestroy()
         {
-            Messenger.RemoveListener(GameEvent.ENEMY_HIT, OnEnemyHit);
+            Messenger.RemoveListener(GameEvent.EnemyHit, OnEnemyHit);
         }
 
         private void OnEnemyHit()

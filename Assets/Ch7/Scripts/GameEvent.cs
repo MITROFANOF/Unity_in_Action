@@ -1,5 +1,9 @@
-public static class GameEvent
+namespace Ch7.Scripts
 {
-    public const string ENEMY_HIT = "ENEMY_HIT";
-    public const string SPEED_CHANGED = "SPEED_CHANGED";
+    public static class GameEvent
+    {
+        public const string EnemyHit = "ENEMY_HIT";
+        public const string SpeedChanged = "SPEED_CHANGED";
+        public const string WeatherUpdated = "WEATHER_UPDATED";
+    }
 }

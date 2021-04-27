@@ -1,4 +1,5 @@
 using System.Collections;
+using Ch7.Scripts;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -35,7 +36,7 @@ namespace Ch2.Scripts
             if (target)
             {
                 target.ReactToHit();
-                Messenger.Broadcast(GameEvent.ENEMY_HIT);
+                Messenger.Broadcast(GameEvent.EnemyHit);
             }
             else
             {

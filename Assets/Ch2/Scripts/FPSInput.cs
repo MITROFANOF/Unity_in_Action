@@ -1,3 +1,4 @@
+using Ch7.Scripts;
 using UnityEngine;
 
 namespace Ch2.Scripts
@@ -14,12 +15,12 @@ namespace Ch2.Scripts
 
         private void Awake()
         {
-            Messenger<float>.AddListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+            Messenger<float>.AddListener(GameEvent.SpeedChanged, OnSpeedChanged);
         }
 
         private void OnDestroy()
         {
-            Messenger<float>.RemoveListener(GameEvent.SPEED_CHANGED, OnSpeedChanged);
+            Messenger<float>.RemoveListener(GameEvent.SpeedChanged, OnSpeedChanged);
         }
 
         private void OnSpeedChanged(float value)
