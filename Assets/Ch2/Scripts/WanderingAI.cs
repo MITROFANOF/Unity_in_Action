@@ -1,21 +1,25 @@
 using Ch7.Scripts;
+using Ch8.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
 namespace Ch2.Scripts
 {
+    [RequireComponent(typeof(CharacterController))]
     public class WanderingAI : MonoBehaviour
     {
-        private static float _speed = 3.0f;
-        private const float BaseSpeed = 3.0f;
-        public float obstacleRange = 5.0f;
+        public float obstacleRange = 2.0f;
+        public float turnAngle = 90f;
 
         [SerializeField] private GameObject fireballPrefab;
         private GameObject _firaball;
-
+        private CharacterController _controller;
+        
         private bool _alive;
+        private static float _speed = 3.0f;
+        private const float BaseSpeed = 3.0f;
+        private const float Gravity = -9.8f;
         private const float CastRadius = 0.75f;
-        private const float TurnAngle = 110f;
 
         private void Awake()
         {
@@ -35,6 +39,7 @@ namespace Ch2.Scripts
         private void Start()
         {
             _alive = true;
+            _controller = GetComponent<CharacterController>();
         }
 
         private void Update()
@@ -46,7 +51,7 @@ namespace Ch2.Scripts
 
             if (Physics.SphereCast(ray, CastRadius, out var hit, obstacleRange))
             {
-                if (hit.transform.gameObject.GetComponent<PlayerCharacter>())
+                if (hit.transform.gameObject.GetComponent<PlayerCharacter>() || hit.transform.gameObject.GetComponent<RelativeMovement>())
                 {
                     if (_firaball) return;
                     _firaball = Instantiate(fireballPrefab);
@@ -55,19 +60,27 @@ namespace Ch2.Scripts
                 }
                 else
                 {
-                    var angle = Random.Range(-TurnAngle, TurnAngle);
+                    var angle = Random.Range(-turnAngle, turnAngle);
                     enemyTransform.Rotate(0f, angle, 0f);
                 }
             }
             else
             {
-                enemyTransform.Translate(0f, 0f, _speed * Time.deltaTime);
+                var movement = new Vector3(0f, Gravity, _speed);
+                movement *= Time.deltaTime;
+                movement = transform.TransformDirection(movement);
+                _controller.Move(movement);
             }
         }
 
         public void SetAlive(bool alive)
         {
             _alive = alive;
+        }
+        
+        public bool IsAlive()
+        {
+            return _alive;
         }
     }
 }

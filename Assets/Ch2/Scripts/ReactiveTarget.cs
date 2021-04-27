@@ -8,8 +8,10 @@ namespace Ch2.Scripts
         public void ReactToHit()
         {
             var behavior = GetComponent<WanderingAI>();
-            // ReSharper disable once Unity.NoNullPropagation
-            behavior?.SetAlive(false);
+
+            if (!behavior || !behavior.IsAlive()) return;
+            
+            behavior.SetAlive(false);
             StartCoroutine(Die());
         }
 
