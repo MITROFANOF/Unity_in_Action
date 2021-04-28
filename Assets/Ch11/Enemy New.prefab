@@ -204,7 +204,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7cd8824aeb476314598976e01eccdd76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obstacleRange: 2
+  obstacleRange: 5
+  turnAngle: 90
   fireballPrefab: {fileID: 8303661957943838043, guid: 9a36b078398249249968839882f94476, type: 3}
 --- !u!143 &2174157854399989066
 CharacterController:

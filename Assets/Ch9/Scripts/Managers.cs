@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Ch10.Scripts;
+using Ch11.Scripts;
 using UnityEngine;
 
 namespace Ch9.Scripts
@@ -10,12 +11,14 @@ namespace Ch9.Scripts
     [RequireComponent(typeof(InventoryManager))]
     [RequireComponent(typeof(WeatherManager))]
     [RequireComponent(typeof(ImagesManager))]
+    [RequireComponent(typeof(AudioManager))]
     public class Managers : MonoBehaviour
     {
         public static PlayerManager Player { get; private set; }
         public static InventoryManager Inventory { get; private set; }
         public static WeatherManager Weather { get; private set; }
         public static ImagesManager Images { get; private set; }
+        public static AudioManager Audio { get; private set; }
 
         private List<IGameManager> _startSequence;
 
@@ -25,8 +28,9 @@ namespace Ch9.Scripts
             Inventory = GetComponent<InventoryManager>();
             Weather = GetComponent<WeatherManager>();
             Images = GetComponent<ImagesManager>();
+            Audio = GetComponent<AudioManager>();
             
-            _startSequence = new List<IGameManager> {Player, Inventory, Weather, Images};
+            _startSequence = new List<IGameManager> {Player, Inventory, Weather, Images, Audio};
 
             StartCoroutine(StartupMessages());
         }

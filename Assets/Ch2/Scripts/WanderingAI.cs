@@ -8,7 +8,8 @@ namespace Ch2.Scripts
     [RequireComponent(typeof(CharacterController))]
     public class WanderingAI : MonoBehaviour
     {
-        public float obstacleRange = 2.0f;
+        public float shootRange = 10.0f;
+        public float wallDetectRange = 1.0f;
         public float turnAngle = 90f;
 
         [SerializeField] private GameObject fireballPrefab;
@@ -49,20 +50,22 @@ namespace Ch2.Scripts
             var enemyTransform = transform;
             var ray = new Ray(enemyTransform.position, enemyTransform.forward);
 
-            if (Physics.SphereCast(ray, CastRadius, out var hit, obstacleRange))
+            if (Physics.SphereCast(ray, CastRadius, out var targetHit, shootRange))
             {
-                if (hit.transform.gameObject.GetComponent<PlayerCharacter>() || hit.transform.gameObject.GetComponent<RelativeMovement>())
+                
+                if (targetHit.transform.gameObject.GetComponent<PlayerCharacter>() || targetHit.transform.gameObject.GetComponent<RelativeMovement>())
                 {
                     if (_firaball) return;
                     _firaball = Instantiate(fireballPrefab);
                     _firaball.transform.position = enemyTransform.TransformPoint(Vector3.forward * 1.5f);
                     _firaball.transform.rotation = enemyTransform.rotation;
                 }
-                else
-                {
-                    var angle = Random.Range(-turnAngle, turnAngle);
-                    enemyTransform.Rotate(0f, angle, 0f);
-                }
+                
+            }
+            if(Physics.SphereCast(ray, CastRadius, out _, wallDetectRange))
+            {
+                var angle = Random.Range(-turnAngle, turnAngle);
+                enemyTransform.Rotate(0f, angle, 0f);
             }
             else
             {
