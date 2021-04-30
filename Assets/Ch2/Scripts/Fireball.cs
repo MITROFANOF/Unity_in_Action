@@ -1,3 +1,4 @@
+using Ch9.Scripts;
 using UnityEngine;
 
 namespace Ch2.Scripts
@@ -17,7 +18,7 @@ namespace Ch2.Scripts
             var player = other.GetComponent<PlayerCharacter>();
             if (player != null)
             {
-                PlayerCharacter.Hurt(damage);
+                Managers.Player.ChangeHealth(-damage);
             }
 
             Destroy(gameObject);

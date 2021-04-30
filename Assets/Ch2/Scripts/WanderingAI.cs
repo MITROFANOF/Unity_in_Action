@@ -1,6 +1,4 @@
-using Ch12.Scripts;
 using Ch7.Scripts;
-using Ch8.Scripts;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -9,11 +7,14 @@ namespace Ch2.Scripts
     [RequireComponent(typeof(CharacterController))]
     public class WanderingAI : MonoBehaviour
     {
+        [SerializeField] private GameObject fireballPrefab;
+        [SerializeField] private AudioSource fireSound;
+        
         public float shootRange = 10.0f;
         public float wallDetectRange = 1.0f;
         public float turnAngle = 90f;
 
-        [SerializeField] private GameObject fireballPrefab;
+        
         private GameObject _firaball;
         private CharacterController _controller;
         
@@ -58,6 +59,7 @@ namespace Ch2.Scripts
                 {
                     if (_firaball) return;
                     _firaball = Instantiate(fireballPrefab);
+                    fireSound.PlayOneShot(fireSound.clip);
                     _firaball.transform.position = enemyTransform.TransformPoint(Vector3.forward * 1.5f);
                     _firaball.transform.rotation = enemyTransform.rotation;
                 }
