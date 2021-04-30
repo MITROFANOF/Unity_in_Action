@@ -18,11 +18,21 @@ namespace Ch9.Scripts
         {
             Debug.Log("Inventory manager starting...");
 
-            _items = new Dictionary<string, int>();
+            UpdateData(new Dictionary<string, int>());
 
             Status = ManagerStatus.Started;
         }
 
+        public void UpdateData(Dictionary<string, int> items)
+        {
+            _items = items;
+        }
+        
+        public Dictionary<string,int> GetData()
+        {
+            return _items;
+        }
+        
         public bool EquipItem(string itemName)
         {
             if (_items.ContainsKey(itemName) && EquippedItem != itemName)

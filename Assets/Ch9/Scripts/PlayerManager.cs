@@ -1,3 +1,4 @@
+using Ch7.Scripts;
 using UnityEngine;
 
 namespace Ch9.Scripts
@@ -5,7 +6,7 @@ namespace Ch9.Scripts
     public class PlayerManager : MonoBehaviour, IGameManager
     {
         public ManagerStatus Status { get; private set; }
-        
+
         public int Health { get; private set; }
         public int MaxHealth { get; private set; }
 
@@ -13,10 +14,15 @@ namespace Ch9.Scripts
         {
             Debug.Log("Player manager starting...");
 
-            Health = 50;
-            MaxHealth = 100;
-            
+            UpdateData(50, 100);
+
             Status = ManagerStatus.Started;
+        }
+
+        public void UpdateData(int health, int maxHealth)
+        {
+            Health = health;
+            MaxHealth = maxHealth;
         }
 
         public void ChangeHealth(int value)
@@ -24,12 +30,18 @@ namespace Ch9.Scripts
             Health += value;
             if (Health > MaxHealth)
                 Health = MaxHealth;
-            else if (Health < 0)
+            else if (Health <= 0)
             {
                 Health = 0;
+                Messenger.Broadcast(GameEvent.LevelFailed);
             }
 
-            Debug.Log("Health: " + Health + "/" + MaxHealth);
+            Messenger.Broadcast(GameEvent.HealthChanged);
+        }
+
+        public void Respawn()
+        {
+            UpdateData(50, 100);
         }
     }
 }

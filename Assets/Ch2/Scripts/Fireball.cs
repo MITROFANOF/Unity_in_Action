@@ -17,7 +17,7 @@ namespace Ch2.Scripts
             var player = other.GetComponent<PlayerCharacter>();
             if (player != null)
             {
-                player.Hurt(damage);
+                PlayerCharacter.Hurt(damage);
             }
 
             Destroy(gameObject);

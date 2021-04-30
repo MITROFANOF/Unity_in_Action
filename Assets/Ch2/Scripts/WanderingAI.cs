@@ -1,3 +1,4 @@
+using Ch12.Scripts;
 using Ch7.Scripts;
 using Ch8.Scripts;
 using UnityEngine;
@@ -53,7 +54,7 @@ namespace Ch2.Scripts
             if (Physics.SphereCast(ray, CastRadius, out var targetHit, shootRange))
             {
                 
-                if (targetHit.transform.gameObject.GetComponent<PlayerCharacter>() || targetHit.transform.gameObject.GetComponent<RelativeMovement>())
+                if (targetHit.transform.gameObject.GetComponent<PlayerCharacter>())
                 {
                     if (_firaball) return;
                     _firaball = Instantiate(fireballPrefab);

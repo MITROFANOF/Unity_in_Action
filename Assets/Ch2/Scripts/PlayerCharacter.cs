@@ -1,20 +1,13 @@
+using Ch9.Scripts;
 using UnityEngine;
 
 namespace Ch2.Scripts
 {
     public class PlayerCharacter : MonoBehaviour
     {
-        private int _health;
-
-        private void Start()
+        public static void Hurt(int damage)
         {
-            _health = 5;
-        }
-
-        public void Hurt(int damage)
-        {
-            _health -= damage;
-            Debug.Log("Health: " + _health);
+            Managers.Player.ChangeHealth(-damage);
         }
     }
 }
